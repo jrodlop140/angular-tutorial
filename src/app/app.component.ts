@@ -12,5 +12,5 @@ import { FooterComponent } from './components/footer/footer.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  nombre = 'Julio Rodríguez';
+  nombre = '@juliorodriguez';
 }
