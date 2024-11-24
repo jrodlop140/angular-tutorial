@@ -1,3 +1,12 @@
+<input [(ngModel)]="nombre">
+{{nombre}}
+<input type="number" [(ngModel)]="numero"><input/>
+<img [src]="'https://picsum.photos/200/300?random='+numero"><img/>
+<!-- Otra forma de hacerlo -->
+<!--<p [textContent]="nombre"></p>-->
+<img [src]="imagenAleatoria"><img/>
+<button (click)="muestraImagen()">Cambiar imagen</button>
+
 <ol>
     <li><a routerLink="/list">Listado</a></li>
     <li><a routerLink="/profile">Perfil</a></li>
