@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class TasklistComponent implements OnInit {
   taskList: Task[] = [];
+  taskToEdit: Task | null = null; // Propiedad para la tarea que se editará
 
   ngOnInit(): void {
     let task1: Task = new Task(1, "Tarea 1", "Descripción Tarea 1", TaskPriority.LOW, TaskStatus.PENDING, new Date("11/1/2024"), new Date("11/18/2024"), false);
@@ -58,12 +59,38 @@ export class TasklistComponent implements OnInit {
     let tarea: Task = this.getTask(taskId)[0];
     tarea.changeStatus();
   }
+
   editTask(taskId: number) {
-    console.log(`Editing Task with identify ${taskId}`);
+    const tarea = this.getTask(taskId)[0];
+    if (tarea) {
+      this.taskToEdit = new Task(
+        tarea.id,
+        tarea.name,
+        tarea.description,
+        tarea.priority,
+        tarea.status,
+        tarea.creationDate,
+        tarea.expirationDate,
+        tarea.isDelete
+      );
+    }
   }
+
   deleteTask(taskId: number) {
     this.taskList = this.taskList.filter((tarea: Task) => {
       return tarea.id != taskId;
     });
+  }
+
+  onSaveTask(task: Task) {
+    const index = this.taskList.findIndex(t => t.id === task.id);
+    if (index > -1) {
+      // Editar tarea existente
+      this.taskList[index] = task;
+    } else {
+      // Agregar nueva tarea
+      this.taskList.push(task);
+    }
+    this.taskToEdit = null; // Limpiar la tarea en edición
   }
 }

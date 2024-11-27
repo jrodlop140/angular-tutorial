@@ -2,45 +2,88 @@
   <div class="row">
     <div class="col-md-12">
       <form [formGroup]="formTaskEdit" (ngSubmit)="onSubmit()">
+        
+        <!-- Campo Nombre -->
         <div class="form-group">
-          <label for="exampleFormControlInput1">Nombre:</label>
-          <input type="email" [ngClass]="{
-            'is-valid': formTaskEdit.get('name')?.valid, 
-            'is-invalid': formTaskEdit.get('name')?.invalid && formTaskEdit.get('name')?.touched
-          }" class="form-control" formControlName="name" id="exampleFormControlInput">
-          <div class="invalid-feedback" *ngIf="formTaskEdit.get('name')?.invalid && formTaskEdit.get('name')?.touched">
-            <small *ngIf="formTaskEdit.get('name')?.hasError('required')">Nombre requerido.</small>
-            <small *ngIf="formTaskEdit.get('name')?.hasError('maxlength')">El nombre no puede tener más de 50
-              caracteres.</small>
-            <small *ngIf="formTaskEdit.get('name')?.hasError('minlength')">El nombre no puede tener menos de 8
-              caracteres.</small>
+          <label for="name">Nombre:</label>
+          <input 
+            type="text" 
+            id="name" 
+            class="form-control"
+            formControlName="name"
+            [ngClass]="{
+              'is-valid': formTaskEdit.get('name')?.valid && formTaskEdit.get('name')?.touched,
+              'is-invalid': formTaskEdit.get('name')?.invalid && formTaskEdit.get('name')?.touched
+            }"
+          />
+          <div class="invalid-feedback">
+            <small *ngIf="formTaskEdit.get('name')?.hasError('required')">El nombre es requerido.</small>
+            <small *ngIf="formTaskEdit.get('name')?.hasError('maxlength')">Máximo 50 caracteres.</small>
           </div>
         </div>
 
+        <!-- Campo Descripción -->
         <div class="form-group">
-          <label for="exampleFormControlInput1">Descripcion:</label>
-          <input type="email" class="form-control" formControlName="description" id="exampleFormControlInput1" rows="1">
+          <label for="description">Descripción:</label>
+          <textarea 
+            id="description" 
+            class="form-control"
+            rows="3"
+            formControlName="description"
+            [ngClass]="{
+              'is-valid': formTaskEdit.get('description')?.valid && formTaskEdit.get('description')?.touched,
+              'is-invalid': formTaskEdit.get('description')?.invalid && formTaskEdit.get('description')?.touched
+            }"
+          ></textarea>
+          <div class="invalid-feedback">
+            <small *ngIf="formTaskEdit.get('description')?.hasError('maxlength')">Máximo 250 caracteres.</small>
+          </div>
         </div>
 
+        <!-- Campo Prioridad -->
         <div class="form-group">
-          <label for="exampleFormControlSelect1">Prioridad</label>
-          <select class="form-control" formControlName="priority" id="exampleFormControlSelect1">
+          <label for="priority">Prioridad:</label>
+          <select 
+            id="priority" 
+            class="form-control" 
+            formControlName="priority"
+            [ngClass]="{
+              'is-valid': formTaskEdit.get('priority')?.valid && formTaskEdit.get('priority')?.touched,
+              'is-invalid': formTaskEdit.get('priority')?.invalid && formTaskEdit.get('priority')?.touched
+            }"
+          >
+            <option value="" disabled>Seleccione una prioridad</option>
             <option value="H">Alta</option>
             <option value="M">Media</option>
-            <option value="L">Baja</option>>
+            <option value="L">Baja</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Fecha expiracion</label>
-          <input type="datetime-local" formControlName="expirationDate"
-            [ngClass]="{'is-invalid': this.formTaskEdit.get('expirationDate')?.invalid}" class="form-control"
-            id="exampleFromcontrolInput">
           <div class="invalid-feedback">
-            <small class="text-danger" *ngIf="formTaskEdit.get('expirationDate')?.errors?.['required']"> El campo es
-              requerido </small>
+            <small *ngIf="formTaskEdit.get('priority')?.hasError('required')">La prioridad es requerida.</small>
+            <small *ngIf="formTaskEdit.get('priority')?.hasError('pattern')">Valor inválido.</small>
           </div>
         </div>
-        <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+
+        <!-- Campo Fecha de Expiración -->
+        <div class="form-group">
+          <label for="expirationDate">Fecha de Expiración:</label>
+          <input 
+            type="datetime-local" 
+            id="expirationDate" 
+            class="form-control"
+            formControlName="expirationDate"
+            [ngClass]="{
+              'is-valid': formTaskEdit.get('expirationDate')?.valid && formTaskEdit.get('expirationDate')?.touched,
+              'is-invalid': formTaskEdit.get('expirationDate')?.invalid && formTaskEdit.get('expirationDate')?.touched
+            }"
+          />
+          <div class="invalid-feedback">
+            <small *ngIf="formTaskEdit.get('expirationDate')?.hasError('required')">La fecha es requerida.</small>
+            <small *ngIf="formTaskEdit.get('expirationDate')?.hasError('invaliDate')">La fecha debe ser posterior a hoy.</small>
+          </div>
+        </div>
+
+        <!-- Botón de Enviar -->
+        <button type="submit" class="btn btn-primary" [disabled]="formTaskEdit.invalid">Guardar Cambios</button>
       </form>
     </div>
   </div>
