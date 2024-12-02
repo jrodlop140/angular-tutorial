@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { customValidator } from './taskform.validator';
 import { Task, TaskStatus } from '../../../models/task.model';
+import { customValidator } from './taskform.validator';
+import { ActivatedRoute ,ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-taskform',
@@ -11,17 +12,24 @@ import { Task, TaskStatus } from '../../../models/task.model';
   templateUrl: './taskform.component.html',
   styleUrls: ['./taskform.component.css']
 })
-export class TaskformComponent {
+export class TaskformComponent implements OnChanges,OnInit {
   @Input() taskToEdit: Task | null = null; // Tarea que llega desde el padre
   @Output() saveTask = new EventEmitter<Task>(); // Evento para enviar tarea al padre
   formTaskEdit: FormGroup;
-
-  constructor(private formBuilder: FormBuilder) {
+  
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder) {
     this.formTaskEdit = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.maxLength(250)]],
       priority: ['', [Validators.required, Validators.pattern(/^(L|M|H)$/)]],
       expirationDate: ['', [Validators.required, customValidator()]]
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params : ParamMap) => {
+        let id = params.get('id');
+        console.log(id);
     });
   }
 
