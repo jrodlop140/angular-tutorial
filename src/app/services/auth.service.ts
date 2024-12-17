@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "@angular/fire/auth";
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider } from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  isAuthenticated = false;
 
-  constructor(private auth: Auth) { }
+
+  constructor(private auth: Auth) {
+    auth.onAuthStateChanged((user) => {
+      this.isAuthenticated = !!user;
+    });
+  }
 
   register({ email, password }: any) {
     return createUserWithEmailAndPassword(this.auth, email, password);
@@ -16,5 +22,7 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  
+  logout() {
+    return signOut(this.auth);
+  }
 }
