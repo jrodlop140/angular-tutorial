@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-taskform [taskToEdit]="taskToEdit" (saveTask)="onSaveTask($event)">
+      <app-taskform [taskToEdit]="taskToEdit" (saveTask)="onSaveTask($event)" (newTask)="addNewTask($event)">
       </app-taskform>
     </div>
   </div>
@@ -11,8 +11,7 @@
     </div>
     <div class="col-md-12">
       <ng-container *ngFor="let task of taskList">
-        <app-taskresume *ngIf="task.isDelete != true" [taskInput]="task"
-          (eventTaskModify)="modifyTask($event)"></app-taskresume>
+        <app-taskresume [taskInput]="task" (eventTaskModify)="modifyTask($event)"></app-taskresume>
       </ng-container>
     </div>
   </div>

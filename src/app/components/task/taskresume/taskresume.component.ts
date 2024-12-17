@@ -29,6 +29,7 @@ export class TaskresumeComponent {
     this.eventTaskModify.emit(new TaskEvent("changeTaskStatus",taskId));
   }
   editTask(taskId: number) {
+    console.log('Task ID emitted from Taskresume:', taskId);
     this.eventTaskModify.emit(new TaskEvent("editTask",taskId));
   }
   deleteTask(taskId: number) {
