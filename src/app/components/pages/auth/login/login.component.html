@@ -1,14 +1,39 @@
 <app-navbar></app-navbar>
 <div class="container">
-  <form>
-    <div class="form-group">
-      <label for="exampleInputUsername">Usuario</label>
-      <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Introduzca nombre de usuario">
+  <div class="row">
+    <div class="col-md-12">
+      <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            class="form-control" 
+            id="email" 
+            aria-describedby="emailHelp" 
+            placeholder="Introduce email"
+            [ngClass]="{'is-invalid': formLogin.get('email')?.invalid, 'is-valid': formLogin.get('email')?.valid}">
+          <div class="invalid-feedback">
+            <small *ngIf="formLogin.get('email')?.errors?.['required']">Debe de introducir una direccion de email</small>
+            <small *ngIf="formLogin.get('email')?.errors?.['email']">El formato del correo introducido no es válido</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputPassword">Password</label>
+          <input 
+            type="password" 
+            class="form-control" 
+            id="exampleInputPassword" 
+            placeholder="Introduce password"
+            [ngClass]="{'is-invalid': formLogin.get('password')?.invalid, 'is-valid': formLogin.get('password')?.valid}">
+          <div class="invalid-feedback">
+            <small *ngIf="formLogin.get('password')?.errors?.['required']">Lo sentimos, pero no ha introducido una contraseña</small>
+            <small *ngIf="formLogin.get('password')?.errors?.['invalidPassword']">La contraseña no cummple con los requisitos mínimos</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
     </div>
-    <div class="form-group">
-      <label for="exampleInputPassword">Contraseña</label>
-      <input type="password" class="form-control" id="exampleInputPassword" placeholder="Intrduzca contraseña">
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
+  </div>
 </div>

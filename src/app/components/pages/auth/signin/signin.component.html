@@ -1,53 +1,45 @@
+<app-navbar></app-navbar>
 <div class="container">
-    <div class="row">
-      <div class="col-md-12 d-flex justify-content-center">
-        <h1>Registro</h1>
-      </div>
-      <div class="col-md-12 d-flex justify-content-center">
-        <form>
-  
-          <!-- Nombre -->
-          <div class="form-group">
-            <label for="exampleInputname">Nombre</label>
-            <input type="text" class="form-control" id="exampleInputname" aria-describedby="emailHelp"
-                   placeholder="Nombre">
-  
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center">
+      <h1>Sign in</h1>
+    </div>
+    <div class="col-md-12 d-flex justify-content-center">
+      <form [formGroup]="formSingin" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="exampleInputEmail">Email</label>
+          <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
+            placeholder="Email"
+            [ngClass]="{'is-invalid': formSingin.get('email')?.invalid, 'is-valid': formSingin.get('email')?.valid}">
+          <div class="invalid-feedback">
+            <small *ngIf="formSingin.get('email')?.errors?.['required']">Debe de introducir una dirección de
+              email</small>
+            <small *ngIf="formSingin.get('email')?.errors?.['email']">El formato del correo introducido no es
+              correcto</small>
           </div>
-  
-          <!-- Apellido -->
-          <div class="form-group">
-            <label for="exampleInputapellido">Apellidos</label>
-            <input type="text" class="form-control" id="exampleInputapellido" aria-describedby="emailHelp"
-                   placeholder="Apellido">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password"
+            [ngClass]="{'is-invalid': formSingin.get('password')?.invalid, 'is-valid': formSingin.get('password')?.valid}">
+          <div class="invalid-feedback">
+            <small *ngIf="formSingin.get('password')?.errors?.['required']">Lo sentimos, pero no ha introducido una
+              contraseña</small>
+            <small *ngIf="formSingin.get('password')?.errors?.['invalidPassword']">La contraseña no cummple con los
+              requisitos mínimos</small>
           </div>
-  
-          <!-- Email -->
-          <div class="form-group">
-            <label for="exampleInputEmail">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
-                   placeholder="Email">
-          </div>
-  
-          <!-- Usuario -->
-          <div class="form-group">
-            <label for="exampleInputUsuario">Usuario</label>
-            <input type="text" class="form-control" id="exampleInputUsuario" aria-describedby="emailHelp"
-                   placeholder="Email">
-          </div>
-  
-          <!--Contraseña-->
-          <div class="form-group">
-            <label for="exampleInputPassword">Contraseña</label>
-            <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
-          </div>
-  
-          <!--Repetir Contraseña-->
-          <div class="form-group">
-            <label for="exampleInputPasswordRepeat">Confirma Contraseña</label>
-            <input type="password" class="form-control" id="exampleInputPasswordRepeat" placeholder="Repeat Password">
-          </div>
-          <button type="submit" class="btn btn-primary">Registrarse</button>
-        </form>
-      </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPasswordRepeat">Repeat Password</label>
+          <input type="password" class="form-control" id="exampleInputPasswordRepeat" placeholder="Repeat Password"
+            [ngClass]="{'is-valid': formSingin.get('repeatPassword')?.valid && !formSingin.hasError('passwordsMismatch'),
+                                     'is-invalid': formSingin.hasError('passwordsMismatch') && formSingin.get('repeatPassword')?.touched}">
+        </div>
+        <div class="text-danger" *ngIf="formSingin.hasError('passwordsMismatch')">
+          Las contraseñas no coinciden.
+        </div>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+      </form>
     </div>
   </div>
+</div>
