@@ -4,6 +4,7 @@ import { NavbarComponent } from '../../../navbar/navbar.component';
 import { customPasswordValidator } from './login.validator';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../services/auth.service';
+import { Router } from '@angular/router';
 import { response } from 'express';
 
 @Component({
@@ -16,7 +17,7 @@ import { response } from 'express';
 export class LoginComponent {
   formLogin: FormGroup;
 
-  constructor(formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.formLogin = formBuilder.group({
       'email': ['', [Validators.required, Validators.email]],
       'password': ['', [Validators.required, customPasswordValidator()]]
@@ -30,5 +31,9 @@ export class LoginComponent {
     } else {
       console.log('Formulario inválido:', this.formLogin.errors);
     }
+  }
+
+  onClick() {
+    this.authService.loginWithGoogle().then(response => { console.log(response); this.router.navigate(['/login']); }).catch(error => console.log(error))
   }
 }
