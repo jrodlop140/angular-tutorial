@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NavbarComponent } from '../../../navbar/navbar.component';
 import { customPasswordValidator } from './login.validator';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../../services/auth.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   formLogin: FormGroup;
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, private authService: AuthService) {
     this.formLogin = formBuilder.group({
       'email': ['', [Validators.required, Validators.email]],
       'password': ['', [Validators.required, customPasswordValidator()]]
@@ -23,7 +25,8 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.formLogin.valid) {
-      console.log('Formulario válido:', this.formLogin.value);
+      console.log('Formulario válido:', this.formLogin.value)
+      this.authService.login(this.formLogin.value).then(response => { console.log(response) }).catch(error => console.log(error))
     } else {
       console.log('Formulario inválido:', this.formLogin.errors);
     }

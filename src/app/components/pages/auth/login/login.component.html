@@ -1,38 +1,63 @@
 <app-navbar></app-navbar>
 <div class="container">
   <div class="row">
+    <div class="col-md-12 d-flex justify-content-center">
+      <h1>Login</h1>
+    </div>
     <div class="col-md-12">
       <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+        <!-- Email Field -->
         <div class="form-group">
           <label for="email">Email</label>
-          <input 
-            type="email" 
-            class="form-control" 
-            id="email" 
-            aria-describedby="emailHelp" 
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            formControlName="email"
             placeholder="Introduce email"
-            [ngClass]="{'is-invalid': formLogin.get('email')?.invalid, 'is-valid': formLogin.get('email')?.valid}">
+            [ngClass]="{
+              'is-invalid': formLogin.get('email')?.invalid && formLogin.get('email')?.touched,
+              'is-valid': formLogin.get('email')?.valid && formLogin.get('email')?.touched
+            }"
+          />
           <div class="invalid-feedback">
-            <small *ngIf="formLogin.get('email')?.errors?.['required']">Debe de introducir una direccion de email</small>
-            <small *ngIf="formLogin.get('email')?.errors?.['email']">El formato del correo introducido no es válido</small>
+            <small *ngIf="formLogin.get('email')?.errors?.['required']">
+              Debe de introducir una dirección de email.
+            </small>
+            <small *ngIf="formLogin.get('email')?.errors?.['email']">
+              El formato del correo introducido no es válido.
+            </small>
           </div>
         </div>
 
+        <!-- Password Field -->
         <div class="form-group">
-          <label for="exampleInputPassword">Password</label>
-          <input 
-            type="password" 
-            class="form-control" 
-            id="exampleInputPassword" 
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            formControlName="password"
             placeholder="Introduce password"
-            [ngClass]="{'is-invalid': formLogin.get('password')?.invalid, 'is-valid': formLogin.get('password')?.valid}">
+            [ngClass]="{
+              'is-invalid': formLogin.get('password')?.invalid && formLogin.get('password')?.touched,
+              'is-valid': formLogin.get('password')?.valid && formLogin.get('password')?.touched
+            }"
+          />
           <div class="invalid-feedback">
-            <small *ngIf="formLogin.get('password')?.errors?.['required']">Lo sentimos, pero no ha introducido una contraseña</small>
-            <small *ngIf="formLogin.get('password')?.errors?.['invalidPassword']">La contraseña no cummple con los requisitos mínimos</small>
+            <small *ngIf="formLogin.get('password')?.errors?.['required']">
+              Lo sentimos, pero no ha introducido una contraseña.
+            </small>
+            <small *ngIf="formLogin.get('password')?.errors?.['invalidPassword']">
+              La contraseña no cumple con los requisitos mínimos.
+            </small>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary" [disabled]="formLogin.invalid">
+          Login
+        </button>
       </form>
     </div>
   </div>
