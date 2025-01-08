@@ -6,6 +6,26 @@
     </div>
     <div class="col-md-12 d-flex justify-content-center">
       <form [formGroup]="formSingin" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Nombre:</label>
+          <input type="name" class="form-control" formControlName="name" id="name"
+              [ngClass]="{'is-invalid': formSingin.get('name')?.invalid, 'is-valid': formSingin.get('name')?.valid}">
+          <div class="invalid-feedback">
+              <small *ngIf="formSingin.get('name')?.errors?.['required']">Lo sentimos pero tiene que introducir su nombre</small>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="surname">Apellidos:</label>
+          <input type="surname" class="form-control" formControlName="surname" id="surname"
+              [ngClass]="{'is-invalid': formSingin.get('surname')?.invalid, 'is-valid': formSingin.get('surname')?.valid}">
+          <div class="invalid-feedback">
+              <small *ngIf="formSingin.get('surname')?.errors?.['required']">Lo sentimos pero tiene que introducir su apellido</small>
+          </div>
+      </div>
+      <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="isAdmin" formControlName="isAdmin">
+          <label class="form-check-label" for="isAdmin">isAdmin</label>
+      </div>
         <!-- Email Field -->
         <div class="form-group">
           <label for="email">Email</label>

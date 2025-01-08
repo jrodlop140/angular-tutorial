@@ -17,10 +17,6 @@ export class NavbarComponent {
 
   }
 
-  redireccion() {
-    this.router.navigate(['/notfound'])
-  }
-
   ngOnInit() {
     this.isAuthenticated = this.authService.isAuthenticated;
   }

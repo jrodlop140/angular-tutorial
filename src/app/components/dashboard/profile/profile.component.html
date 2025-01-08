@@ -1,1 +1,16 @@
-<p>profile works!</p>
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Datos del Usuario:</h3>
+    <div class="card" style="width: 18rem; margin: 0 auto;">
+        <div class="card-body">
+            <h5 class="card-title">{{ user?.name }} {{ user?.surname }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ user?.email }}</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Rol:</strong> {{ user?.role }}</li>
+            <li class="list-group-item"><strong>Fecha de creación:</strong> {{ user?.createAt}}</li>
+        </ul>
+        <div class="card-footer text-muted">
+            Información del perfil
+        </div>
+    </div>
+</div>
